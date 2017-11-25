@@ -24,7 +24,7 @@ class Config:
         class PathProxy:
             def __getattr__(self, item):
                 return config.get_path(var = item, default = None)
-        self.paths = PathProxy()
+        self.path = PathProxy()
 
     def get_value(self, var, default = None):
         '''
@@ -116,7 +116,7 @@ class Config:
             config_vars = [(key, value) for key, value in config_vars if isinstance(value, (int, float, str, bool, Path))]
             return Config(dict(config_vars))
         except Exception as e:
-            raise Exception('Failed to load configuration from file: {}'.format(e))
+            raise Exception('Failed to load configuration from configuration file: {}'.format(e))
 
 
 
@@ -202,8 +202,8 @@ class Path:
     def __init__(self, file):
         root_path = dirname(inspect.getfile(sys._getframe(1)))
         self.path = normpath(join(root_path, file))
-        if not isfile(self.path):
-            raise ValueError('File "{}" doesnt exist'.format(self.path))
+        #if not isfile(self.path):
+        #    raise ValueError('File "{}" doesnt exist'.format(self.path))
 
     def __str__(self):
         return self.path
