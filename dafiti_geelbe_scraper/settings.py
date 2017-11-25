@@ -1,7 +1,6 @@
 
 
-from .config import GlobalConfig
-project_config = GlobalConfig()
+from .config import global_config
 
 BOT_NAME = 'dafiti-geelbe-scraper'
 
@@ -24,14 +23,22 @@ SPIDER_MIDDLEWARES = {
 }
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
-SPLASH_URL = project_config.SPLASH_PROXY_URL
+SPLASH_URL = global_config.SPLASH_PROXY_URL
 
 
 # Configuración de los pipelines
-ITEM_PIPELINES = {
+pipelines = [
+    'dafiti_geelbe_scraper.pipelines.DefaultPipeline'
+]
 
-}
+if global_config.OUTPUT_DATA_TO_SQLITE:
+    pipelines.append('dafiti_geelbe_scraper.DatabasePipeline')
 
+ITEM_PIPELINES = {}
+for index in range(0, len(pipelines)):
+    pipeline = pipelines[index]
+    priority = 1 + index
+    ITEM_PIPELINES[pipeline] = priority
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
