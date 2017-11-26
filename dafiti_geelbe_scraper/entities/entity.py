@@ -5,7 +5,7 @@ from item_loader import ItemLoader
 from db import db
 
 
-class __Entity:
+class EntityMixins:
     @classmethod
     def get_scrapy_item_loader(cls, **kwargs):
         '''
@@ -34,5 +34,4 @@ class __Entity:
         entity = cls(**fields)
         return entity
 
-
-Entity = (__Entity, db.Entity)
+Entity = db.Entity
