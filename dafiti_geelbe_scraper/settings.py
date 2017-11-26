@@ -1,6 +1,6 @@
 
 
-from .config import global_config
+from config import global_config
 
 BOT_NAME = 'dafiti-geelbe-scraper'
 
@@ -31,8 +31,8 @@ pipelines = [
     'dafiti_geelbe_scraper.pipelines.DefaultPipeline'
 ]
 
-if global_config.OUTPUT_DATA_TO_SQLITE:
-    pipelines.append('dafiti_geelbe_scraper.DatabasePipeline')
+if global_config.path.OUTPUT_DATA_TO_SQLITE:
+    pipelines.append('dafiti_geelbe_scraper.pipelines.DatabasePipeline')
 
 ITEM_PIPELINES = {}
 for index in range(0, len(pipelines)):
