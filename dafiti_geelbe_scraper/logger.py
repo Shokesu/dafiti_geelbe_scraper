@@ -34,6 +34,7 @@ class Logger:
         if global_config.is_set('LOG_LEVEL'):
             self.set_level(global_config.LOG_LEVEL)
 
+        self.stdout = global_config.is_true('OUTPUT_LOGS_TO_STDOUT')
 
     def message(self, level, message, *args):
         if self.severity[level] < self.severity[self.level]:
@@ -41,7 +42,7 @@ class Logger:
 
         message = '{}: {}'.format(level.upper(), message.format(*args))
 
-        if global_config.is_true('OUTPUT_LOGS_TO_STDOUT'):
+        if self.stdout:
             print(message)
 
         if not self.file_path is None:
@@ -104,6 +105,14 @@ class Logger:
 
         self.level = level
 
+
+    def output_to_stdout(self, value = True):
+        '''
+        Activa/Desactiva el mostrar los logs en la salida estándard.
+        :param value: Un valor booleano. Por defecto True.
+        :return:
+        '''
+        self.stdout = value
 
     def get_level(self):
         '''
