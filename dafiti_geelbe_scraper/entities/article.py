@@ -1,34 +1,33 @@
 
-from .entity import Entity
-from pony.orm import PrimaryKey, Required
+from .entity import Entity, EntityMixins
+from pony.orm import PrimaryKey, Required, Optional, composite_key
 import scrapy
 from item_processors import *
 from scrapy.loader.processors import TakeFirst
 
-class Article(*Entity):
+class Article(Entity, EntityMixins):
     '''
     Representa la entidad Artículo.
     '''
 
-    # Nombre alternativo para la tabla de la entidad en la base de datos
-    _table = 'article'
-
     # Definición de atributos de la entidad (Base de datos)
     id = PrimaryKey(int, auto=True)
     price = Required(float)
-    category = Required(str)
-    name = Required(str, unique=True)
+    name = Required(str)
     line = Required(str)
     brand = Required(str)
+    provider = Required(str)
+    image = Required(str)
+    composite_key(name, provider)
 
 
     # Definición de los atributos de la entidad (Scrapy)
     class ScrapyItem(scrapy.Item):
         price = scrapy.Field(input_processor = ToFloat(), output_processor = TakeFirst(), mandatory = True)
-        category = scrapy.Field(output_processor = TakeFirst(), mandatory = True)
         name = scrapy.Field(output_processor = TakeFirst(), mandatory = True)
-        line = scrapy.Field(output_processor = TakeFirst(), mandatory = True)
-        brand = scrapy.Field(output_processor = TakeFirst(), mandatory = True)
-
+        line = scrapy.Field(input_processor = NameFormatter(), output_processor = TakeFirst(), mandatory = True)
+        brand = scrapy.Field(input_processor = NameFormatter(), output_processor = TakeFirst(), mandatory = True)
+        provider = scrapy.Field(output_processor = TakeFirst(), mandatory = True)
+        image = scrapy.Field(output_processor = TakeFirst(), mandatory = False)
 
 

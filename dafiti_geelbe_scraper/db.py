@@ -2,6 +2,8 @@
 import pony
 from pony.orm import Database as PonyDatabase, set_sql_debug
 from config import global_config
+from os import remove
+from os.path import exists
 
 class Database:
     '''
@@ -12,6 +14,9 @@ class Database:
     class __Singleton(PonyDatabase):
         def __init__(self):
             db_path = global_config.path.OUTPUT_DATA_TO_SQLITE
+
+            #if exists(db_path):
+            #    remove(db_path)
 
             logs_enabled = all([
                 global_config.path.OUTPUT_DATA_TO_SQLITE,
