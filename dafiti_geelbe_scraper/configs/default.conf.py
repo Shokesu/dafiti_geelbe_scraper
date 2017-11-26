@@ -28,6 +28,12 @@ LOG_LEVEL = 'WARNING'
 # Muestra todos los mensajes de logging generados por la salida estándard.
 OUTPUT_LOGS_TO_STDOUT = False
 
+# Ruta del fichero con los logs de la araña responsable de escrapear los datos de la página web Geelbe
+OUTPUT_GEELBE_SPIDER_LOG = path('log/geelbe.log')
+
+# Ruta del fichero con los logs de la araña responsable de escrapear los datos de la página web Dafiti
+OUTPUT_DAFITI_SPIDER_LOG = path('log/dafiti.log')
+
 # Muestra mensajes de logging por la salida estandard generados por la librería pony orm.
 # No tiene efecto si LOG_LEVEL ES 'INFO' o si la variable OUTPUT_LOGS_TO_STDOUT es False
 OUTPUT_PONY_LOGS_TO_STDOUT = False
