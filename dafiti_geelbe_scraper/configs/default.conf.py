@@ -40,4 +40,4 @@ OUTPUT_PONY_LOGS_TO_STDOUT = False
 # -----------------------------------------------
 
 # Establece la url del proxy usado para prcoesar el código javascript de las páginas.
-SPLASH_PROXY_URL = 'https://localhost:8050'
+SPLASH_PROXY_URL = 'http://localhost:8050'
