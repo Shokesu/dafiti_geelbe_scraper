@@ -11,22 +11,13 @@ class Spider(scrapy.Spider):
     def __init__(self, **kwargs):
         super().__init__()
 
+        # Se pueden especificar más variables de configuración por línea de comandos,
+        # o por settings de Scrapy.
+        self.config = global_config.copy()
+        self.config.override(Config(kwargs))
+
         # La configuración del scraper debe ser correcta
-        global_config.check()
-
-
-        # La araña puede tener configuración adicional
-        # Puede ser especificada via settings en scrapy o por linea
-        # de comandos.
-        self.config = Config(kwargs)
-
-
-    def get_config(self):
-        '''
-        :return: Devuelve la configuración de la araña
-        '''
-        return self.config
-
+        self.config.check()
 
 
     def view(self, response):
@@ -40,3 +31,10 @@ class Spider(scrapy.Spider):
         with open(path, 'wb') as fh:
             fh.write(response.body)
         webbrowser.open(path)
+
+
+    def get_config(self):
+        '''
+        :return: Devuelve la configuración de esta araña
+        '''
+        return self.config
