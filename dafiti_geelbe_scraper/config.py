@@ -1,5 +1,5 @@
 
-from copy import copy
+from copy import deepcopy
 from os.path import dirname, join, normpath, basename, isfile
 import importlib.util
 from re import match
@@ -18,13 +18,16 @@ class Config:
         rutas relativas especificadas en las variables de configuración. Por defecto es
         el directorio padre de este script
         '''
-        self.vars = copy(vars)
+        self.vars = deepcopy(vars)
 
         config = self
         class PathProxy:
             def __getattr__(self, item):
                 return config.get_path(var = item, default = None)
         self.path = PathProxy()
+
+    def copy(self):
+        return Config(self.vars)
 
     def get_value(self, var, default = None):
         '''
