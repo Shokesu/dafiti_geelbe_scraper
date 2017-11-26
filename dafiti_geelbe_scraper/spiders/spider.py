@@ -27,7 +27,7 @@ class Spider(scrapy.Spider):
         :param response:
         :return:
         '''
-        handle, path = mkstemp()
+        handle, path = mkstemp(suffix = '.html')
         with open(path, 'wb') as fh:
             fh.write(response.body)
         webbrowser.open(path)
