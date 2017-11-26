@@ -3,17 +3,18 @@
 Este script define procesadores de campos de items Scrapy.
 '''
 
-class TypeConverter:
+from re import match, sub
+
+class ValueConverter:
     '''
     Es una clase de utilidad. Es un processor que puede usarse para definir los campos
-    de los items. Sirver para realizar conversiones de tipo de los valores de los campos.
-    Las subclases deben implementar el método convert.
+    de los items. Sirver para realizar conversiones de los valores de los campos.
     '''
     def convert(self, value):
         '''
-        Modifica el tipo de un valor de entrada que se pasa como parámetro
+        Modifica un valor de entrada que se pasa como parámetro
         :param value:
-        :return: Devuelve el valor de entrada con su tipo modificado.
+        :return: Devuelve un valor modificado.
         '''
         return value
 
@@ -26,7 +27,7 @@ class TypeConverter:
                 pass
         return next_values
 
-class ToFloat(TypeConverter):
+class ToFloat(ValueConverter):
     '''
     Sirve para formatear los campos de los items como valores flotantes
     '''
@@ -34,9 +35,24 @@ class ToFloat(TypeConverter):
         return float(value)
 
 
-class ToInt(TypeConverter):
+class ToInt(ValueConverter):
     '''
     Sirve para formatear los campos de los items como valores enteros.
     '''
     def convert(self, value):
         return int(value)
+
+
+class NameFormatter(ValueConverter):
+    '''
+    Sirve para formatear los campos de los items como nombres propios.
+    Las palabras se separarán por un único espacio (el resto de espacios
+    se eliminan)
+    Las primera palabra comenzará con una mayúscula. El resto serán minúsculas
+    '''
+    def convert(self, value):
+        name = str(value)
+        name = match('^[ ]*([ \w]*\w)[ ]*$', name).group(1)
+        name = sub('[ ]+', ' ', name)
+        name = name[0].upper() + name[1:].lower()
+        return name
