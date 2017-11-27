@@ -5,8 +5,6 @@ from splash_utils import splash_request
 from entities.article import Article
 
 from logger import Logger
-from config import global_config
-
 
 from urllib.parse import urlencode
 import re
@@ -19,9 +17,9 @@ class GeelbeSpider(Spider):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.log = Logger(file_path = global_config.path.OUTPUT_GEELBE_SPIDER_LOG)
+        self.log = Logger(file_path = self.get_config().path.OUTPUT_GEELBE_SPIDER_LOG)
         self.log.set_level(self.get_config().LOG_LEVEL)
-        self.log.output_to_stdout()
+        self.log.output_to_stdout(True)
 
     def start_requests(self):
         # Scrapeamos productos de la línea 'Mujeres'
