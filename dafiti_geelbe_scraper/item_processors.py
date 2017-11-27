@@ -52,7 +52,7 @@ class NameFormatter(ValueConverter):
     '''
     def convert(self, value):
         name = str(value)
-        name = match('^[ ]*([ \w]*\w)[ ]*$', name).group(1)
+        name = match('^[ ]*(.*[^ ])[ ]*$', name).group(1)
         name = sub('[ ]+', ' ', name)
         name = name[0].upper() + name[1:].lower()
         return name
