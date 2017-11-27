@@ -1,7 +1,7 @@
 
 import scrapy
 import webbrowser
-from ..config import global_config, Config
+from config import global_config, Config
 from tempfile import mkstemp
 
 class Spider(scrapy.Spider):
