@@ -17,7 +17,7 @@ class Article(Entity, EntityMixins):
     line = Required(str)
     brand = Required(str)
     provider = Required(str)
-    image = Required(str)
+    image = Optional(str)
     composite_key(name, provider)
 
 
