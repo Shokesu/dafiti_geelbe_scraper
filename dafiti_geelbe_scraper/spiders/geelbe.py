@@ -11,18 +11,6 @@ from config import global_config
 from urllib.parse import urlencode
 import re
 
-
-'''
-        loader = Article.get_scrapy_item_loader()
-        loader.add_value('price', 2000)
-        loader.add_value('category', 't-shirts')
-        loader.add_value('line', 'woman')
-        loader.add_value('name', 'Cool T-Shirt')
-        loader.add_value('brand', 'Lacost')
-        loader.add_value('provider', 'geelbe')
-        item = loader.load_item()
-'''
-
 class GeelbeSpider(Spider):
     '''
     Araña para escrapear la página de geelbe
